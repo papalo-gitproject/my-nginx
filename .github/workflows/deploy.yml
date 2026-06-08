@@ -3,6 +3,9 @@ name: Helm Deployment
 on:
   push:
 
+env:
+  IMAGE_TAG: "1.31.1"
+
 jobs:
   deploy:
 
@@ -13,6 +16,9 @@ jobs:
       - name: Repository auschecken
         uses: actions/checkout@v4
 
+      - name: Image Tag anzeigen
+        run: echo "IMAGE_TAG=$IMAGE_TAG"
+
       - name: Helm prüfen
         run: helm lint .
 
@@ -20,4 +26,4 @@ jobs:
         run: |
           helm template my-nginx . \
              -n nginx-lab \
-             --set image.tag=1.31.1
+             --set image.tag="$IMAGE_TAG"
