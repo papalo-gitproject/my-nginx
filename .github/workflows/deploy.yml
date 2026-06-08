@@ -27,3 +27,9 @@ jobs:
           helm template my-nginx . \
              -n nginx-lab \
              --set image.tag="$IMAGE_TAG"
+
+      - name: Gerendertes Image anzeigen
+        run: |
+          helm template my-nginx . \
+             -n nginx-lab \
+             --set image.tag="$IMAGE_TAG" | grep "image:"
