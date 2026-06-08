@@ -16,8 +16,8 @@ jobs:
       - name: Helm prüfen
         run: helm lint .
 
-      - name: Helm Upgrade
+      - name: Helm Template
         run: |
-          helm upgrade my-nginx . \
-          -n nginx-lab \
-          --set image.tag=1.31.1
+          helm template my-nginx . \
+             -n nginx-lab \
+             --set image.tag=1.31.1
