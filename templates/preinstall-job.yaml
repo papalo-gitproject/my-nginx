@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: preinstall-job
+  annotations:
+    "helm.sh/hook": pre-install
+
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+
+      containers:
+      - name: preinstall
+        image: busybox
+        command:
+        - sh
+        - -c
+        - echo "Pre-install Hook läuft!"

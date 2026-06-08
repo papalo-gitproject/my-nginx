@@ -1,0 +1,23 @@
+name: Helm Deployment
+
+on:
+  push:
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Helm prüfen
+        run: helm lint .
+
+      - name: Helm Upgrade
+        run: |
+          helm upgrade my-nginx . \
+          -n nginx-lab \
+          --set image.tag=1.31.1

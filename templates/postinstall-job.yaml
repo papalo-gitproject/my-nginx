@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postinstall-job
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+
+      containers:
+      - name: postinstall
+        image: busybox
+        command:
+        - sh
+        - -c
+        - echo "Post-install oder Post-upgrade Hook läuft!"
