@@ -1,0 +1,9 @@
+# values-dev.yaml
+replicaCount: 1
+
+image:
+  tag: "latest"
+
+config:
+  appEnv: "dev"
+  logLevel: "debug"

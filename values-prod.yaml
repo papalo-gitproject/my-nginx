@@ -1,0 +1,12 @@
+# values-prod.yaml
+replicaCount: 3
+
+image:
+  tag: "1.31.1"
+
+ingress:
+  enabled: true
+
+config:
+  appEnv: "prod"
+  logLevel: "warn"

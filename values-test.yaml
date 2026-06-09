@@ -1,0 +1,5 @@
+replicaCount: 2
+
+config:
+  appEnv: "test"
+  logLevel: "info"

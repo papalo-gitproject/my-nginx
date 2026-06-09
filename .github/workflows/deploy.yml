@@ -1,35 +1,29 @@
-name: Helm Deployment
+name: Helm CI
 
 on:
   push:
 
-env:
-  IMAGE_TAG: ${{ vars.IMAGE_TAG }}
-
 jobs:
-  deploy:
+  helm:
 
     runs-on: ubuntu-latest
 
     steps:
 
-      - name: Repository auschecken
-        uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Image Tag anzeigen
-        run: echo "IMAGE_TAG=$IMAGE_TAG"
+    - name: Install Helm
+      uses: azure/setup-helm@v4
 
-      - name: Helm prüfen
-        run: helm lint .
+    - name: Helm Lint
+      run: helm lint .
 
-      - name: Helm Template
-        run: |
-          helm template my-nginx . \
-             -n nginx-lab \
-             --set image.tag="$IMAGE_TAG"
+    - name: Helm Template DEV
+      run: helm template my-nginx . -f values-dev.yaml
 
-      - name: Gerendertes Image anzeigen
-        run: |
-          helm template my-nginx . \
-             -n nginx-lab \
-             --set image.tag="$IMAGE_TAG" | grep "image:"
+    - name: Helm Template TEST
+      run: helm template my-nginx . -f values-test.yaml
+
+    - name: Helm Template PROD
+      run: helm template my-nginx . -f values-prod.yaml
