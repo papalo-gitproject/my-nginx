@@ -29,6 +29,8 @@ jobs:
         run: helm template my-nginx . -f values-dev.yaml
 
       - name: Helm Upgrade DEV
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
           export MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace nginx-lab my-nginx-mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
           export MYSQL_PASSWORD=$(kubectl get secret --namespace nginx-lab my-nginx-mysql -o jsonpath="{.data.mysql-password}" | base64 -d)
@@ -37,4 +39,5 @@ jobs:
             -n nginx-lab \
             -f values-dev.yaml \
             --set mysql.auth.rootPassword="$MYSQL_ROOT_PASSWORD" \
-            --set mysql.auth.password="$MYSQL_PASSWORD"
+            --set mysql.auth.password="$MYSQL_PASSWORD" \
+            --set secret.apiKey="$API_KEY"           
