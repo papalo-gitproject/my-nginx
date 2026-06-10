@@ -10,6 +10,17 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+     
+      - name: Secret vorhanden?
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
+        run: |
+          if [ -n "$MY_SECRET" ]; then
+            echo "Secret erfolgreich geladen."
+          else
+            echo "Secret fehlt."
+            exit 1
+          fi
 
       - name: Helm Lint
         run: helm lint .
