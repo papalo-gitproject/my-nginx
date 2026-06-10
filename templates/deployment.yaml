@@ -34,6 +34,12 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secret
+                  key: API_KEY
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
