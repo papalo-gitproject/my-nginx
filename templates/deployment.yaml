@@ -35,10 +35,25 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: my-nginx-config
+                  key: APP_ENV
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: my-nginx-config
+                  key: APP_NAME
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: my-nginx-config
+                  key: LOG_LEVEL
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-secret
+                  name: my-nginx-secret
                   key: API_KEY
           {{- with .Values.securityContext }}
           securityContext:
